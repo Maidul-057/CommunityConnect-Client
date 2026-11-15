@@ -42,6 +42,17 @@ export function getAuthHandlers() {
     ...(process.env.CLIENT_URL || "").split(",").map((origin) => origin.trim()).filter(Boolean),
   ])];
 
+  if (process.env.NODE_ENV === "production") {
+    // A localhost value copied from .env.example would sign JWTs that the production API rejects.
+    const localhostSettings = Object.entries({
+      BETTER_AUTH_URL: appUrl,
+      BETTER_AUTH_JWT_ISSUER: issuer,
+      BETTER_AUTH_JWT_AUDIENCE: audience,
+    }).filter(([, value]) => /^https?:\/\/(localhost|127\.0\.0\.1|\[::1\])(:|\/|$)/i.test(value));
+    if (localhostSettings.length > 0) {
+      throw new Error(`${localhostSettings.map(([name]) => name).join(", ")} must not point to localhost in production.`);
+    }
+  }
   if (!mongoUri) throw new Error("MONGODB_URI must be configured for Better Auth.");
   if (!appUrl) throw new Error("BETTER_AUTH_URL must be configured to the Next.js origin in production.");
   if (!secret || secret.length < 32) {
