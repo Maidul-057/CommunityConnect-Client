@@ -33,7 +33,7 @@ Next.js App Router, React, TypeScript, Better Auth, Express, MongoDB, and Sonner
 
 ## Local development
 
-Start MongoDB and the Express API first. See [the server README](../server/README.md) for API configuration. The Next.js server also connects to that same MongoDB database for Better Auth user, session, account, and signing-key collections.
+Start MongoDB and the Express API first. See [the server README](https://github.com/Maidul-057/CommunityConnectServer/blob/main/README.md) for API configuration. The Next.js server also connects to that same MongoDB database for Better Auth user, session, account, and signing-key collections.
 
 ```powershell
 Copy-Item .env.example .env.local
@@ -41,7 +41,7 @@ npm install
 npm run dev
 ```
 
-`NEXT_PUBLIC_API_URL` is the public Express API origin (local default `http://localhost:5000`) and is the only public client variable. The Next.js server also needs `MONGODB_URI`, `MONGODB_DB`, `BETTER_AUTH_SECRET`, `BETTER_AUTH_URL`, `BETTER_AUTH_JWT_ISSUER`, `BETTER_AUTH_JWT_AUDIENCE`, and `CLIENT_URL`. GitHub OAuth uses optional server-only `GITHUB_CLIENT_ID` and `GITHUB_CLIENT_SECRET`. Copy `.env.example` to `.env.local`; never prefix secrets with `NEXT_PUBLIC_` or commit `.env.local`.
+`NEXT_PUBLIC_API_URL` is the public Express API origin (local default `http://localhost:3000`) and is the only public client variable. The Next.js server also needs `MONGODB_URI`, `MONGODB_DB`, `BETTER_AUTH_SECRET`, `BETTER_AUTH_URL`, `BETTER_AUTH_JWT_ISSUER`, `BETTER_AUTH_JWT_AUDIENCE`, and `CLIENT_URL`. GitHub OAuth uses optional server-only `GITHUB_CLIENT_ID` and `GITHUB_CLIENT_SECRET`. Copy `.env.example` to `.env.local`; never prefix secrets with `NEXT_PUBLIC_` or commit `.env.local`.
 
 ## Production and route refreshes
 
@@ -66,7 +66,7 @@ Variable names below come from the source code. A variable that starts with `NEX
 | `CLIENT_URL` | Same value as `BETTER_AUTH_URL` |
 | `GITHUB_CLIENT_ID` and `GITHUB_CLIENT_SECRET` | Optional, only for GitHub sign-in |
 
-In production the server refuses to handle authentication requests if `BETTER_AUTH_URL`, `BETTER_AUTH_JWT_ISSUER`, or `BETTER_AUTH_JWT_AUDIENCE` points to localhost. The Express API (Render) needs `BETTER_AUTH_JWT_ISSUER` and `BETTER_AUTH_JWT_AUDIENCE` set to exactly the same values, plus `BETTER_AUTH_JWKS_URL=https://community-connect-client-xi.vercel.app/api/auth/jwks`. See [the server README](../server/README.md).
+In production the server refuses to handle authentication requests if `BETTER_AUTH_URL`, `BETTER_AUTH_JWT_ISSUER`, or `BETTER_AUTH_JWT_AUDIENCE` points to localhost. The Express API (Render) needs `BETTER_AUTH_JWT_ISSUER` and `BETTER_AUTH_JWT_AUDIENCE` set to exactly the same values, plus `BETTER_AUTH_JWKS_URL=https://community-connect-client-xi.vercel.app/api/auth/jwks`. See [the server README](https://github.com/Maidul-057/CommunityConnectServer/blob/main/README.md).
 
 **Verifying a deployment:** sign in, open `/api/auth/token`, and decode the JWT. Its `iss` and `aud` claims must equal the Vercel URL above. If the API answers `401` with "Invalid or expired authentication token", the Render logs print the expected and received issuer and audience.
 
